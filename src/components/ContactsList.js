@@ -1,10 +1,9 @@
-import { useState } from "react"
-import { Link, useSearchParams } from "react-router-dom"
-
+import { useState } from "react";
+import { Link, Routes, useSearchParams } from "react-router-dom";
+import ContactsView from "./ContactsView";
+// "contacts" must be passed as a prop to this component
 function ContactsList(props) {
-  
-  //"contacts" must be passed as prop to this component
-  const { contacts } = props
+  const { contacts } = props;
 
   return (
     <>
@@ -13,22 +12,25 @@ function ContactsList(props) {
       </header>
       <ul className="contacts-list">
         {contacts.map((contact, index) => {
-          const { firstName, lastName } = contact
+          const { firstName, lastName } = contact;
           return (
             <li className="contact" key={index}>
               <p>
                 {firstName} {lastName}
               </p>
               <p>
-                { /** TODO: Make a Link here to view contact */}
-                View
+                {/* create a link, and display updated information according to entry
+                inset the text that will appear on the page */}
+                <Link to={`/contacts/${contact.id}`} state={{ contact }}>
+                  View
+                </Link>
               </p>
             </li>
-          )
+          );
         })}
       </ul>
     </>
-  )
+  );
 }
 
-export default ContactsList
+export default ContactsList;
