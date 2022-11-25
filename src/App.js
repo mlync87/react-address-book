@@ -1,24 +1,35 @@
-import { useEffect, useState } from "react";
-import { link, Route, Routes } from "react-router-dom";
-import ContactsList from "./components/ContactsList";
-import ContactsAdd from "./components/ContactsAdd";
-import "./styles/styles.css";
-import ContactsView from "./components/ContactsView";
+// i have added contactsEdit and meetings. I will need to create these in
+// the components section.  
+// Also, i corrected the spelling of "Link" as in lower case it would not work.
+import { useEffect, useState } from "react"
+import { Link, Route, Routes } from "react-router-dom"
+import ContactsList from "./components/ContactsList"
+import ContactsAdd from "./components/ContactsAdd"
+import ContactsEdit from "./components/ContactsEdit"
+import "./styles/styles.css"
+import ContactsView from "./components/ContactsView"
+import Meetings from "./components/Meetings"
 
 export default function App() {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState([])
+  const [isLoading, setLoading] = useState(true)
   // useEffect will re render the page when information is added/edited
-  useEffect(() => {
+  useEffect(async () => {
     // a fetch request will change URL and open details
     // then convert to json
     // console log to check the value and update the state
-    fetch("http://localhost:4000/contacts/?results=50")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("contact data", data);
-        setContacts(data);
-      });
-  }, []);
+  //   fetch("http://localhost:4000/contacts/?results=50")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log("contact data", data);
+  //       setContacts(data);
+  //     });
+  // }, []);
+  const res = await fetch('http://localhost:4000/contacts')
+  const data = await res.json()
+  setContacts(data)
+  setIsLoading(false)
+  }, [])
   // an empty array will run when component initially loads
   return (
     <>
@@ -32,7 +43,8 @@ export default function App() {
             <Link to="/">Contacts List</Link>
           </li>
           <li>
-            <Link to="/addNewContact">Add New Contact</Link>
+            {/* the link to my contacts folder was incorrect. ammended here */}
+            <Link to="/contacts/add">Add New Contact</Link>
           </li>
         </ul>
       </nav>
@@ -40,16 +52,14 @@ export default function App() {
         {/* use route tags to display path in browser. This will show component in
 use and any props being used. */}
         <Routes>
-          <Route path="/" element={<ContactsList contacts={contacts} />} />
-          <Route
-            Path="/addNewContact"
-            element={
-              <contactAdd contacts={contacts} setContacts={setContacts} />
-            }
-          />
-          <Route path="/contacts.id" element={<ContactsView />} />
+          {/* i have ammended my routes to include loading, edit, and meetings */}
+        <Route path='/' element={<ContactsList contacts={contacts} setContacts={setContacts} isLoading={isLoading}/>} />
+          <Route path='/contacts/add' element={<ContactsAdd setContacts={setContacts} contacts={contacts}/>} />
+          <Route path='/contacts/:id' element={<ContactsView />} />
+          <Route path='/contacts/:id/edit' element={<ContactsEdit setContacts={setContacts} contacts={contacts}/>} />
+          <Route path='/contacts/:id/meetings' element={<Meetings />} />
         </Routes>
       </main>
     </>
-  );
+  )
 }
