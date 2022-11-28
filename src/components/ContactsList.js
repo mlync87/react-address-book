@@ -1,36 +1,105 @@
 import { useState } from "react";
-import { Link, Routes, useSearchParams } from "react-router-dom";
-import ContactsView from "./ContactsView";
-// "contacts" must be passed as a prop to this component
-function ContactsList(props) {
-  const { contacts } = props;
+import { Link, useSearchParams } from "react-router-dom";
+// import the loading spinner from created file
+import Spinner from "./spinner";
+
+function ContactsList({ contacts, setContacts, isloading }) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const handleChange = async (event) => {
+    const { value, checked } = event.target;
+    const types = searchParams.getAll("type");
+    // use if statements to input variances of data when boxes are
+    // checked/unchecked.
+    if (checked) types.push(value);
+    if (!checked) types.splice(types.indexOf(value), 1);
+    // set search parameters by referring to type, then sub type
+    setSearchParams({ type: types });
+    const filteredContacts = await filterByTypes(types);
+    setContacts(filteredContacts);
+  };
+  // declare a const for filtering.
+  // use async to fetch data from "types"
+  const filterByTypes = async (types) => {
+    // use a fetch request to retieve data from url
+    const res = await fetch("http://localhost:4000/contacts");
+    // use res.json to target the body of the requested data retrieved from url
+    const data = await res.json();
+    // if the length of the typs is equal to zero, return filtered contact
+    // data, as well as the type of contact.
+    if (types.length === 0) return data;
+    return data.filter((contact) => types.includes(contact.type));
+  };
+  // declare handleDelete a const and use async to retrieve data from fetch.
+  const handleDelete = async (id) => {
+    // apply a delete method, and allow url to update according to this.
+    const res = await fetch(`http://localhost:4000/contacts/${id}`, {
+      method: "DELETE",
+    });
+    const data = await res.json();
+    const filteredContacts = contacts.filter((contact) => contact.id !== id);
+    setContacts(filteredContacts);
+  };
 
   return (
     <>
       <header>
         <h2>Contacts</h2>
       </header>
-      <ul className="contacts-list">
-        {contacts.map((contact, index) => {
-          const { firstName, lastName } = contact;
-          return (
-            <li className="contact" key={index}>
-              <p>
-                {firstName} {lastName}
-              </p>
-              <p>
-                {/* create a link, and display updated information according to entry
-                inset the text that will appear on the page */}
-                <Link to={`/contacts/${contact.id}`} state={{ contact }}>
-                  View
-                </Link>
-              </p>
-            </li>
-          );
-        })}
-      </ul>
+      {/* applay the loading spinner to the isLoading so that it'll appear when in this state */}
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          <label className="filter">
+            <input
+              name="type"
+              type="checkbox"
+              value="personal"
+              onChange={handleChange}
+            />
+            {/* apply emoticons for each of these sections, and text that
+            will appear */}
+            <span>🍻</span> Personal
+          </label>
+          <label className="filter">
+            <input
+              name="type"
+              type="checkbox"
+              value="work"
+              onChange={handleChange}
+            />
+            <span>💻</span> Work
+          </label>
+          <ul className="contacts-list">
+            {contacts.map((contact) => {
+              return (
+                <li className="contact" key={contact.id}>
+                  <p>
+                    {contact.firstName} {contact.lastName}
+                  </p>
+                  {/* use Link to retrieve contactsc data from contactcs section
+                  by using ${contacts.id} we can refer to the id section of the contacts */}
+                  <p>
+                    <Link to={`/contacts/${contact.id}`}>View</Link>
+                    <Link
+                      to={`/contacts/${contact.id}/edit`}
+                      state={{ contact }}
+                    >
+                      {/* use onCLick to update the contact section when delete is selected */}
+                      Edit
+                    </Link>
+                    <a href="#" onClick={() => handleDelete(contact.id)}>
+                      Delete
+                    </a>
+                  </p>
+                </li>
+              );
+            })}
+          </ul>
+        </>
+      )}
     </>
   );
 }
-
+// export the fuction
 export default ContactsList;
