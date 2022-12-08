@@ -5,6 +5,7 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "@types/react": "^18.0.26",
     "json-server": "^0.17.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",

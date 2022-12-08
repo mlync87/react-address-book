@@ -12,14 +12,14 @@ function ContactsEdit({ setContacts, contacts }) {
     setContactData(data)
   }, [])
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     const { name, value } = event.target
-    const newContactData = { ...contactData }
+    const newContactData = {...contactData}
     newContactData[`${name}`] = value
     setContactData(newContactData)
   }
-
-  const handleSubmit = async (event) => {
+// Ive removed the parentheses from some of my statements.
+  const handleSubmit = async event => {
     event.preventDefault()
 
     const res = await fetch(`http://localhost:4000/contacts/${id}`, {
@@ -28,8 +28,7 @@ function ContactsEdit({ setContacts, contacts }) {
       body: JSON.stringify(contactData)
     })
     const data = await res.json()
-    const updatedContacts = contacts.map(contact =>
-      contact.id === Number(id) ? data.contact : contact)
+    const updatedContacts = contacts.map(contact => contact.id === Number(id) ? data.contact : contact)
     setContacts(updatedContacts)
     navigate(`/contacts/${id}`)
   }

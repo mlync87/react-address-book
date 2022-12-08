@@ -4,8 +4,8 @@
 // all my single quotation marks into doubles and applies semi colons when
 // not needed.
 // declaring all variables with if statements eventually became too confusing
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 // as there is no syntax i've decided to move a few of my components
 // declare initialState as a const and
 const initialState = {

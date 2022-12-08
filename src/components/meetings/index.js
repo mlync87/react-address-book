@@ -32,13 +32,13 @@ function Meetings() {
     setMeetingData(newMeetingData)
   }
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async event => {
     event.preventDefault()
     // The await operator is used to wait for a Promise and get its fulfillment value.
     // It can only be used inside an async function or at the top level of a module.
     const res = await fetch(`http://localhost:4000/contacts/${id}/meetings`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(meetingData)
     })
     const data = await res.json()
@@ -55,13 +55,7 @@ function Meetings() {
         <h2>Create A Meeting</h2>
 
         <label htmlFor="name">Meeting Name</label>
-        <input
-          id="name"
-          name="name"
-          type="text"
-          required onChange={handleChange}
-          value={meetingData.name}
-        />
+        <inputm id="name" name="name" type="text" required onChange={handleChange} value={meetingData.name}/>
 
         <div className="actions-section">
           <button className="button blue" type="submit">
@@ -71,12 +65,10 @@ function Meetings() {
       </form>
 
       <ul className="contacts-list">
-        {meetings.map((meeting) => (
-          <Meeting key={meeting.id} data={meeting} />
-        ))}
+        {meetings.map(meeting => <Meeting key={meeting.id} data={meeting} />)}
       </ul>
     </>
   )
 }
 
-export default Meetings;
+export default Meetings

@@ -7,7 +7,10 @@
       "street": "10 Keen Street",
       "city": "London",
       "type": "work",
-      "email": "johncarmack@email.com"
+      "email": "johncarmack@email.com",
+      "linkedIn": "https://www.linkedin.com/",
+      "twitter": "http://twitter.com"
+
     },
     {
       "id": 2,
@@ -48,6 +51,24 @@
       "email": "homersimpson@gmail.com",
       "linkedIn": "https://www.linkedin.com/",
       "twitter": "https://www.facebook.com/"
+    }
+  ],
+  
+  "meetings": [
+    {
+      "name": "meeting demo",
+      "contactId": "1",
+      "id": 2
+    },
+    {
+      "name": "another meeting demo",
+      "contactId": "2",
+      "id": 3
+    },
+    {
+      "name": "a third meeting demo",
+      "contactId": "1",
+      "id": 4
     }
   ]
 }

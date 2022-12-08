@@ -6,14 +6,14 @@ import Spinner from "./Spinner"
 function ContactsList({ contacts, setContacts, isLoading }) {
   const [searchParams, setSearchParams] = useSearchParams()
   const handleChange = async event => {
-    const { value, checked } = event.target
+    const {value, checked} = event.target
     const types = searchParams.getAll('type')
     // use if statements to input variances of data when boxes are
     // checked/unchecked.
     if (checked) types.push(value)
     if (!checked) types.splice(types.indexOf(value), 1)
     // set search parameters by referring to type, then sub type
-    setSearchParams({ type: types })
+    setSearchParams({type: types})
     const filteredContacts = await filterByTypes(types)
     setContacts(filteredContacts)
   }
@@ -27,10 +27,10 @@ function ContactsList({ contacts, setContacts, isLoading }) {
     // if the length of the typs is equal to zero, return filtered contact
     // data, as well as the type of contact.
     if (types.length === 0) return data
-    return data.filter((contact) => types.includes(contact.type))
+    return data.filter(contact => types.includes(contact.type))
   }
   // declare handleDelete a const and use async to retrieve data from fetch.
-  const handleDelete = async (id) => {
+  const handleDelete = async id => {
     // apply a delete method, and allow url to update according to this.
     const res = await fetch(`http://localhost:4000/contacts/${id}`, { method: 'DELETE' })
     const data = await res.json()
@@ -40,58 +40,39 @@ function ContactsList({ contacts, setContacts, isLoading }) {
 
   return (
     <>
-      <header>
-        <h2>Contacts</h2>
-      </header>
+    <header>
+      <h2>Contacts</h2>
+    </header>
 
-      { isLoading ?
+    { isLoading ?
       <Spinner /> :
       <>
-          <label className="filter">
-            <input
-              name="type"
-              type="checkbox"
-              value="personal"
-              onChange={handleChange}
-            />
-            <span>🍻</span> Personal
-          </label>
-          <label className="filter">
-            <input
-              name="type"
-              type="checkbox"
-              value="work"
-              onChange={handleChange}
-            />
-            <span>💻</span> Work
-          </label>
-          <ul className="contacts-list">
-            {contacts.map((contact) => {
-              return (
-                <li className="contact" key={contact.id}>
-                  <p>
-                    {contact.firstName} {contact.lastName}
-                  </p>
-                  <p>
-                    <Link to={`/contacts/${contact.id}`}>View</Link>
-                    <Link
-                      to={`/contacts/${contact.id}/edit`}
-                      state={{ contact }}
-                    >
-                      Edit
-                    </Link>
-                    <a href="#" onClick={() => handleDelete(contact.id)}>
-                      Delete
-                    </a>
-                  </p>
-                </li>
-              )
-            })}
-          </ul>
-        </>
-      }
+        <label className="filter">
+          <input name="type" type="checkbox" value="personal"  onChange={handleChange} />
+          <span>🍻</span> Personal
+        </label>
+        <label className="filter">
+          <input name="type" type="checkbox" value="work"  onChange={handleChange} />
+          <span>💻</span> Work
+        </label>
+        <ul className="contacts-list">
+          {contacts.map(contact => {
+            return (
+              <li className="contact" key={contact.id}>
+                <p>{contact.firstName} {contact.lastName}</p>
+                <p>
+                  <Link to={`/contacts/${contact.id}`}>View</Link>
+                  <Link to={`/contacts/${contact.id}/edit`} state={{contact}}>Edit</Link>
+                  <a href="#" onClick={() => handleDelete(contact.id)}>Delete</a>
+                </p>
+              </li>
+            )
+          })}
+        </ul>
+      </>
+    }
     </>
   )
 }
 
-export default ContactsList;
+export default ContactsList
