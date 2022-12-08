@@ -3,7 +3,7 @@ import { Link, useSearchParams } from "react-router-dom"
 // import the loading spinner from created file
 import Spinner from "./Spinner"
 
-function ContactsList({ contacts, setContacts, isloading }) {
+function ContactsList({ contacts, setContacts, isLoading }) {
   const [searchParams, setSearchParams] = useSearchParams()
   const handleChange = async event => {
     const { value, checked } = event.target
