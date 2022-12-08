@@ -1,55 +1,52 @@
-import { useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useState } from "react"
+import { Link, useSearchParams } from "react-router-dom"
 // import the loading spinner from created file
-import Spinner from "./spinner";
+import Spinner from "./Spinner"
 
 function ContactsList({ contacts, setContacts, isloading }) {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const handleChange = async (event) => {
-    const { value, checked } = event.target;
-    const types = searchParams.getAll("type");
+  const [searchParams, setSearchParams] = useSearchParams()
+  const handleChange = async event => {
+    const { value, checked } = event.target
+    const types = searchParams.getAll('type')
     // use if statements to input variances of data when boxes are
     // checked/unchecked.
-    if (checked) types.push(value);
-    if (!checked) types.splice(types.indexOf(value), 1);
+    if (checked) types.push(value)
+    if (!checked) types.splice(types.indexOf(value), 1)
     // set search parameters by referring to type, then sub type
-    setSearchParams({ type: types });
-    const filteredContacts = await filterByTypes(types);
-    setContacts(filteredContacts);
-  };
+    setSearchParams({ type: types })
+    const filteredContacts = await filterByTypes(types)
+    setContacts(filteredContacts)
+  }
   // declare a const for filtering.
   // use async to fetch data from "types"
   const filterByTypes = async (types) => {
     // use a fetch request to retieve data from url
-    const res = await fetch("http://localhost:4000/contacts");
+    const res = await fetch("http://localhost:4000/contacts")
     // use res.json to target the body of the requested data retrieved from url
-    const data = await res.json();
+    const data = await res.json()
     // if the length of the typs is equal to zero, return filtered contact
     // data, as well as the type of contact.
-    if (types.length === 0) return data;
-    return data.filter((contact) => types.includes(contact.type));
-  };
+    if (types.length === 0) return data
+    return data.filter((contact) => types.includes(contact.type))
+  }
   // declare handleDelete a const and use async to retrieve data from fetch.
   const handleDelete = async (id) => {
     // apply a delete method, and allow url to update according to this.
-    const res = await fetch(`http://localhost:4000/contacts/${id}`, {
-      method: "DELETE",
-    });
-    const data = await res.json();
-    const filteredContacts = contacts.filter((contact) => contact.id !== id);
-    setContacts(filteredContacts);
-  };
+    const res = await fetch(`http://localhost:4000/contacts/${id}`, { method: 'DELETE' })
+    const data = await res.json()
+    const filteredContacts = contacts.filter(contact => contact.id !== id)
+    setContacts(filteredContacts)
+  }
 
   return (
     <>
       <header>
         <h2>Contacts</h2>
       </header>
-      {/* applay the loading spinner to the isLoading so that it'll appear when in this state */}
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <>
+
+      { isLoading ?
+      <Spinner /> :
+      <>
           <label className="filter">
             <input
               name="type"
@@ -57,8 +54,6 @@ function ContactsList({ contacts, setContacts, isloading }) {
               value="personal"
               onChange={handleChange}
             />
-            {/* apply emoticons for each of these sections, and text that
-            will appear */}
             <span>🍻</span> Personal
           </label>
           <label className="filter">
@@ -77,15 +72,12 @@ function ContactsList({ contacts, setContacts, isloading }) {
                   <p>
                     {contact.firstName} {contact.lastName}
                   </p>
-                  {/* use Link to retrieve contactsc data from contactcs section
-                  by using ${contacts.id} we can refer to the id section of the contacts */}
                   <p>
                     <Link to={`/contacts/${contact.id}`}>View</Link>
                     <Link
                       to={`/contacts/${contact.id}/edit`}
                       state={{ contact }}
                     >
-                      {/* use onCLick to update the contact section when delete is selected */}
                       Edit
                     </Link>
                     <a href="#" onClick={() => handleDelete(contact.id)}>
@@ -93,13 +85,13 @@ function ContactsList({ contacts, setContacts, isloading }) {
                     </a>
                   </p>
                 </li>
-              );
+              )
             })}
           </ul>
         </>
-      )}
+      }
     </>
-  );
+  )
 }
-// export the fuction
+
 export default ContactsList;

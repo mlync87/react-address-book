@@ -1,18 +1,18 @@
 // i have added contactsEdit and meetings. I will need to create these in
 // the components section.
 // Also, i corrected the spelling of "Link" as in lower case it would not work.
-import { useEffect, useState } from "react";
-import { Link, Route, Routes } from "react-router-dom";
-import ContactsList from "./components/ContactsList";
-import ContactsAdd from "./components/ContactsAdd";
-import ContactsEdit from "./components/ContactsEdit";
-import "./styles/styles.css";
-import ContactsView from "./components/ContactsView";
-import Meetings from "./components/Meetings";
+import { useEffect, useState } from "react"
+import { Link, Route, Routes } from "react-router-dom"
+import ContactsList from "./components/ContactsList"
+import ContactsAdd from "./components/ContactsAdd"
+import ContactsView from "./components/ContactsView"
+import ContactsEdit from "./components/ContactsEdit"
+import Meetings from "./components/meetings"
+import "./styles/styles.css"
 
 export default function App() {
-  const [contacts, setContacts] = useState([]);
-  const [isLoading, setLoading] = useState(true);
+  const [contacts, setContacts] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
   // useEffect will re render the page when information is added/edited
   useEffect(async () => {
     // a fetch request will change URL and open details
@@ -25,11 +25,11 @@ export default function App() {
     //       setContacts(data);
     //     });
     // }, []);
-    const res = await fetch("http://localhost:4000/contacts");
-    const data = await res.json();
-    setContacts(data);
-    setLoading(false);
-  }, []);
+    const res = await fetch("http://localhost:4000/contacts")
+    const data = await res.json()
+    setContacts(data)
+    setIsLoading(false)
+  }, [])
   // an empty array will run when component initially loads
   return (
     <>
@@ -53,32 +53,14 @@ export default function App() {
 use and any props being used. */}
         <Routes>
           {/* i have ammended my routes to include loading, edit, and meetings */}
-          <Route
-            path="/"
-            element={
-              <ContactsList
-                contacts={contacts}
-                setContacts={setContacts}
-                isLoading={isLoading}
-              />
-            }
-          />
-          <Route
-            path="/contacts/add"
-            element={
-              <ContactsAdd setContacts={setContacts} contacts={contacts} />
-            }
-          />
-          <Route path="/contacts/:id" element={<ContactsView />} />
-          <Route
-            path="/contacts/:id/edit"
-            element={
-              <ContactsEdit setContacts={setContacts} contacts={contacts} />
-            }
-          />
-          <Route path="/contacts/:id/meetings" element={<Meetings />} />
+          <Route path='/' element={<ContactsList contacts={contacts} setContacts={setContacts} isLoading={isLoading}/>} />
+          <Route path='/contacts/add' element={<ContactsAdd setContacts={setContacts} contacts={contacts}/>} />
+          <Route path='/contacts/:id' element={<ContactsView />} />
+          <Route path='/contacts/:id/edit' element={<ContactsEdit setContacts={setContacts} contacts={contacts}/>} />
+          <Route path='/contacts/:id/meetings' element={<Meetings />} />
         </Routes>
       </main>
     </>
-  );
+  )
 }
+

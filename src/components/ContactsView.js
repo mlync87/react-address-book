@@ -1,24 +1,24 @@
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react"
+import { Link, useParams } from "react-router-dom"
 
 function ContactsView() {
-  const [contact, setContact] = useState(false);
+  const [contact, setContact] = useState(false)
 
-  const { id } = useParams();
+  const { id } = useParams()
 
   useEffect(async () => {
     // use a fetch request to displat the contact and ID
     // according to parameter changes
     // interesting thing about await, it can only be used in an async
-    const res = await fetch(`http://localhost:4000/contacts/${id}`);
-    const data = await res.json();
+    const res = await fetch(`http://localhost:4000/contacts/${id}`)
+    const data = await res.json()
 
-    setContact(data);
-  }, []);
+    setContact(data)
+  }, [])
 
   if (!contact) {
     // return Loading while there is no contact present
-    return <p>Loading</p>;
+    return <p>Loading</p>
   }
 
   return (
@@ -30,18 +30,12 @@ function ContactsView() {
       </h2>
       {/* address, email, linkedIn and twitter will appear in a vertical
 row beneath individuals name */}
-      <p>
-        <a href={contact.linkedIn}>LinkedIn</a> |
-        <a href={contact.twitter}>Twitter</a>
-      </p>
+      <p><a href={contact.linkedin}>LinkedIn</a> | <a href={contact.twitter}>Twitter</a></p>
       <p>email: {contact.email}</p>
-      <p>
-        address: {contact.street} {contact.city}
-      </p>
-
+      <p>address: {contact.street} {contact.city}</p>
       <Link to={`/contacts/${contact.id}/meetings`}>Meetings</Link>
     </div>
-  );
+  )
 }
 
-export default ContactsView;
+export default ContactsView

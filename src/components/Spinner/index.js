@@ -1,4 +1,4 @@
-import "./style.css";
+import "./style.css"
 
 function Spinner() {
   return (
@@ -11,4 +11,4 @@ function Spinner() {
   );
 }
 
-export default Spinner;
+export default Spinner

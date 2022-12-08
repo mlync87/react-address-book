@@ -5,45 +5,45 @@ import Meeting from "./Meeting";
 // declare a const to contain name and make it an empty array
 // ready to have info placed into it.
 const initialState = {
-  name: "",
-};
+  name: '',
+}
 // declare meetings as a function and retrieve data from setmeetings
 // component in the meetings file.
 function Meetings() {
-  const [meetings, setMeetings] = useState([]);
-  const [meetingData, setMeetingData] = useState(initialState);
+  const [meetings, setMeetings] = useState([])
+  const [meetingData, setMeetingData] = useState(initialState)
   //   use id number to identify individual items
-  const { id } = useParams();
+  const { id } = useParams()
   //React async
   // React Async is a utility belt for declarative promise resolution and data fetching.
   // It makes it easy to handle asynchronous UI states, without assumptions about the shape
   // of your data or the type of request.
   // use conditional rendering to update url and update meetings data
   useEffect(async () => {
-    const res = await fetch(`http://localhost:4000/contacts/${id}/meetings`);
-    const data = await res.json();
-    setMeetings(data);
-  }, []);
+    const res = await fetch(`http://localhost:4000/contacts/${id}/meetings`)
+    const data = await res.json()
+    setMeetings(data)
+  }, [])
   // update meetings data whenever new info is retrieved from name. value
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    const newMeetingData = { ...meetingData };
-    newMeetingData[`${name}`] = value;
-    setMeetingData(newMeetingData);
-  };
+  const handleChange = event => {
+    const { name, value } = event.target
+    const newMeetingData = { ...meetingData }
+    newMeetingData[`${name}`] = value
+    setMeetingData(newMeetingData)
+  }
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     // The await operator is used to wait for a Promise and get its fulfillment value.
     // It can only be used inside an async function or at the top level of a module.
     const res = await fetch(`http://localhost:4000/contacts/${id}/meetings`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(meetingData),
-    });
-    const data = await res.json();
-    setMeetings([...meetings, data]);
-  };
+      body: JSON.stringify(meetingData)
+    })
+    const data = await res.json()
+    setMeetings([...meetings, data])
+  }
 
   return (
     <>
@@ -59,8 +59,7 @@ function Meetings() {
           id="name"
           name="name"
           type="text"
-          required
-          onChange={handleChange}
+          required onChange={handleChange}
           value={meetingData.name}
         />
 
@@ -73,12 +72,11 @@ function Meetings() {
 
       <ul className="contacts-list">
         {meetings.map((meeting) => (
-          // use arrays to specify data wished to be retrieved
           <Meeting key={meeting.id} data={meeting} />
         ))}
       </ul>
     </>
-  );
+  )
 }
 
 export default Meetings;
