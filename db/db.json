@@ -10,7 +10,6 @@
       "email": "johncarmack@email.com",
       "linkedIn": "https://www.linkedin.com/",
       "twitter": "http://twitter.com"
-
     },
     {
       "id": 2,
@@ -20,7 +19,9 @@
       "city": "London",
       "email": "GraceHopper@example.com",
       "linkedIn": "https://www.linkedin.com/",
-      "twitter": "https://www.facebook.com/"
+      "twitter": "https://www.facebook.com/",
+      "type": "work",
+      "linkedin": "http://linkenin.com"
     },
     {
       "id": 3,
@@ -51,24 +52,28 @@
       "email": "homersimpson@gmail.com",
       "linkedIn": "https://www.linkedin.com/",
       "twitter": "https://www.facebook.com/"
-    }
-  ],
-  
-  "meetings": [
-    {
-      "name": "meeting demo",
-      "contactId": "1",
-      "id": 2
     },
     {
-      "name": "another meeting demo",
-      "contactId": "2",
-      "id": 3
+      "firstName": "John",
+      "lastName": "Constantine",
+      "street": "1247 Enstrom",
+      "city": "Los Angeles",
+      "type": "personal",
+      "email": "hellblazer@dcComics.com",
+      "linkedin": "http://linkedin.com",
+      "twitter": "http://twitter.com",
+      "id": 6
     },
     {
-      "name": "a third meeting demo",
-      "contactId": "1",
-      "id": 4
+      "firstName": "maria",
+      "lastName": "quinn",
+      "street": "fountain lane",
+      "city": "lisburn",
+      "type": "personal",
+      "email": "quinnmaria@ymail.com",
+      "linkedin": "http://linkenin.com",
+      "twitter": "http://twitter.com",
+      "id": 7
     }
   ]
 }

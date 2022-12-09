@@ -12,13 +12,15 @@ function ContactsEdit({ setContacts, contacts }) {
     setContactData(data)
   }, [])
 
+  
   const handleChange = event => {
     const { name, value } = event.target
     const newContactData = {...contactData}
     newContactData[`${name}`] = value
     setContactData(newContactData)
   }
-// Ive removed the parentheses from some of my statements.
+// Ive removed the parentheses from some of my statements these were 
+// frequently being changed by prettier.
   const handleSubmit = async event => {
     event.preventDefault()
 
@@ -32,7 +34,7 @@ function ContactsEdit({ setContacts, contacts }) {
     setContacts(updatedContacts)
     navigate(`/contacts/${id}`)
   }
-
+// enable editing of selected contacts. create fields for each individual component.
   return (
     <form className="form-stack contact-form" onSubmit={handleSubmit}>
       <h2>Update Contact</h2>

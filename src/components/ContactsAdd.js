@@ -108,7 +108,8 @@ function ContactsAdd({ setContacts, contacts }) {
         <option id="personal" >personal</option>
         <option id="work" >work</option>
       </select>
-
+{/* list the required inputs and other variables required to create a contact
+if these conditions are not met, then a popup for the requested field will appear */}
       <label htmlFor="firstName">First Name</label>
       <input id="firstName" name="firstName" type="text" required onChange={handleChange} value={contactData.firstName}/>
 
@@ -138,5 +139,6 @@ function ContactsAdd({ setContacts, contacts }) {
     </form>
   )
 }
-
+// export ContactsAdd so that it can be imported into the app.js. These will
+// be declared at the top before any coding. This will enable testing as i progress.
 export default ContactsAdd

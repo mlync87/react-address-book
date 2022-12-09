@@ -3,16 +3,16 @@
 // Also, i corrected the spelling of "Link" as in lower case it would not work.
 import { useEffect, useState } from "react"
 import { Link, Route, Routes } from "react-router-dom"
-import ContactsList from "./components/ContactsList"
+import ContactsList from "./components/ContactsList.js"
 import ContactsAdd from "./components/ContactsAdd"
 import ContactsView from "./components/ContactsView"
 import ContactsEdit from "./components/ContactsEdit"
-import Meetings from "./components/meetings"
+
 import "./styles/styles.css"
 
 export default function App() {
   const [contacts, setContacts] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   // useEffect will re render the page when information is added/edited
   useEffect(async () => {
     // a fetch request will change URL and open details
@@ -30,7 +30,7 @@ export default function App() {
     setContacts(data)
     setIsLoading(false)
   }, [])
-  // an empty array will run when component initially loads
+  // an empty array will have data interpolated into
   return (
     <>
       <nav>
@@ -57,10 +57,9 @@ use and any props being used. */}
           <Route path='/contacts/add' element={<ContactsAdd setContacts={setContacts} contacts={contacts}/>} />
           <Route path='/contacts/:id' element={<ContactsView />} />
           <Route path='/contacts/:id/edit' element={<ContactsEdit setContacts={setContacts} contacts={contacts}/>} />
-          <Route path='/contacts/:id/meetings' element={<Meetings />} />
+          
         </Routes>
       </main>
     </>
   )
 }
-

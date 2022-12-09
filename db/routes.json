@@ -1,3 +1,0 @@
-{
-  "/contacts/:contactId/meetings/:meetingsId": "/meetings/:meetingId"
-}
